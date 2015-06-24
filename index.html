@@ -40,11 +40,22 @@
 
 <hr>
         <h3>Drinks:</h3>
+<button ng-click="main.newDrink()">New Drink</button>
+
         <div div="drinks_holder" ng-repeat="(drink, info) in main.drinks">
             <h4>{{drink}}:</h4>
             <img src="img/{{drink}}.png">
             <button ng-click="main.drinkRemove(drink)">Remove</button>
-            You've taken: {{main.drinks[drink]["count"]}} {{drink}}.
+            You've taken: {{main.drinks[drink]["count"]}} {{drink}} 
+            of volume 
+    <input type="text" ng-model="usert" ng-blur="main.setWeight(user_weight)" placeholder='{{main.drinks[drink]["std_volume"]}}'>
+
+ 
+            and  alcohol content of
+
+<input type="text" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont)" placeholder="{{main.drinks[drink]['alcohol_content']}}%">
+
+             .
             <button ng-click="main.drinkAdd(drink)">Add</button>
 
         </div>

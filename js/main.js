@@ -65,12 +65,24 @@ function bac_update () {
 // Handlers
 
 
+main.newDrink = function(){
+    // drink_ID = main.drinks.length;
+    drink_ID = Object.keys(main.drinks).length;
+    console.log(drink_ID);
+    main.drinks[drink_ID] = {"count" : 0, "alcohol_content" : 45, "std_volume" : 0.03, "img" : "beer.png"};
+};
+
 main.setSex = function(sex){
     main.user["sex"] = sex;
     bac_update();
 };       
 
-
+main.setAlcoholContent = function(drink_ID, content){
+    main.drinks[drink_ID]["alcohol_content"] = content;
+    console.log(drink_ID);
+    console.log(content);
+    bac_update();
+}
 
 main.setWeight = function (weight){
     // Sets the weight
