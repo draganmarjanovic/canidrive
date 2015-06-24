@@ -59,7 +59,7 @@ function bac_update () {
     removal_fac = standard_alcohol_removal_factor; // Covered
     time = main.user["time"]; // Covered
     bac = bac_calc(consumed_alc, wid_factor, body_mass, removal_fac, time); // Covered
-    main.user["bac"] = bac;
+    main.user["bac"] = bac.toFixed(3);
 }
 
 // Handlers
