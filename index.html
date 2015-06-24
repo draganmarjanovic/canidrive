@@ -24,14 +24,14 @@
 <hr>
 
     <h3>You:</h3>
-    <input type="text" ng-model="user_weight" ng-blur="main.setWeight(user_weight)" placeholder="Weight (kg)">
+    <input type="number" ng-model="user_weight" ng-blur="main.setWeight(user_weight); user_weight = null" placeholder="{{main.user['weight']}} kg">
     
   <label>
-    <input type="radio" ng-model="user_sex" value="male" ng-click="main.setSex(user_sex)">
+    <input checked type="radio" ng-model="user_sex" value="male" ng-click="main.setSex(user_sex)">
     Male
   </label><br/>
   <label>
-    <input type="radio" ng-model="user_sex" value="female" ng-click="main.setSex(user_sex)">
+    <input type="radio" ng-model="user_sex" value="female" ng-click="main.setSex(user_sex)" />
     Female
   </label><br/>
   {{user_sex}}
@@ -44,16 +44,16 @@
 
         <div div="drinks_holder" ng-repeat="(drink, info) in main.drinks">
             <h4>{{drink}}:</h4>
-            <img src="img/{{drink}}.png">
+            <img src="img/{{main.drinks[drink]['img']}}">
             <button ng-click="main.drinkRemove(drink)">Remove</button>
             You've taken: {{main.drinks[drink]["count"]}} {{drink}} 
             of volume 
-    <input type="text" ng-model="usert" ng-blur="main.setWeight(user_weight)" placeholder='{{main.drinks[drink]["std_volume"]}}'>
+    <input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{main.drinks[drink]["std_volume"]*1000}}mL'>
 
  
             and  alcohol content of
 
-<input type="text" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont)" placeholder="{{main.drinks[drink]['alcohol_content']}}%">
+<input type="number" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{main.drinks[drink]['alcohol_content']}}%">
 
              .
             <button ng-click="main.drinkAdd(drink)">Add</button>
@@ -64,7 +64,7 @@
 <hr>
         <h3>Time:</h3>
         How many hours ago did you start drinking?  <br>
-        <input type="text" ng-model="elapsed_time" ng-blur="main.setTime(elapsed_time)" placeholder="Elapsed Time (hrs)">
+        <input type="number" ng-model="elapsed_time" ng-blur="main.setTime(elapsed_time); elapsed_time = null" placeholder="{{main.user['time']}} hrs">
 
 
 
