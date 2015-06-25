@@ -1,5 +1,19 @@
-angular.module('canIDrive', [])
-    .controller('MainController', function() {
+/**
+* @file Main handler and processing code for the webapp.
+* @author Dragan Marjanovic <gagalug13@gmail.com>
+* @copyright Dragan Marjanovic 2015
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details. 
+*/
+
+angular.module('canIDrive', []).controller('MainController', function() {
 
 
 // Variables
@@ -15,18 +29,32 @@ var widmark_factor = {
 
 var main = this;
 
+// Default User Profile
 main.user = { "sex" : "male",
               "weight" : 85.9,
               "bac" : 0.00,
               "drive" : false,
-              "time" : 0
+              "time" : 0,
+              "color" : "#607D8B"
 
 };
 
-
-main.drinks = { "Beer" : {"count" : 0, "alcohol_content" : 4.9, "std_volume" : .375, "img" : "beer.png"},
-                "Wine" : {"count" : 0, "alcohol_content" : 11.6, "std_volume" : .15, "img" : "wine.png"},
-                "Spirits" : {"count" : 0, "alcohol_content" : 45, "std_volume" : .03, "img" : "spirits.png"},
+// Preset Drinks
+main.drinks = { "Beer" : {"count" : 0,
+                          "alcohol_content" : 4.9,
+                          "std_volume" : 0.375,
+                          "img" : "beer.png"
+                         },
+                "Wine" : {"count" : 0,
+                          "alcohol_content" : 11.6,
+                          "std_volume" : 0.15,
+                          "img" : "wine.png"
+                         },
+                "Spirits" : {"count" : 0,
+                             "alcohol_content" : 45,
+                             "std_volume" : 0.03,
+                             "img" : "spirits.png"
+                            },
                };
 
 
@@ -36,8 +64,8 @@ main.drinks = { "Beer" : {"count" : 0, "alcohol_content" : 4.9, "std_volume" : .
 // Core Functions
 
 function bac_calc (consumed_alc, wid_factor, body_mass, removal_fac, time) {
-    /*Calculates the Blood Alcohol Content
-    bac_calc() -> float
+    /** Calculates the Blood Alcohol Content
+    * @returns {Number} - Blood Alcohol Content
     */
     var b = (((consumed_alc/(wid_factor*body_mass))*100)-(removal_fac*time));
 
@@ -62,6 +90,13 @@ function bac_update () {
     main.user["bac"] = bac.toFixed(3);
 }
 
+function color_update (bac) {
+    /**
+    * @todo DO this
+    * @todo Do that
+    */
+}
+
 // Handlers
 
 
@@ -84,8 +119,6 @@ main.setAlcoholContent = function(drink_ID, content){
     else{
         main.drinks[drink_ID]["alcohol_content"] = content;
     }
-    console.log(drink_ID);
-    console.log(content);
     bac_update();
 };
 
@@ -97,8 +130,6 @@ main.setAlcoholVolume = function(drink_ID, volume){
     else{
        main.drinks[drink_ID]["std_volume"] = volume;
     }
-    console.log(drink_ID);
-    console.log(volume);
     bac_update();
 };
 
@@ -123,20 +154,27 @@ main.setTime = function (elapsed_time) {
 };
 
 
-    main.drinkAdd = function(type){
-        /* Increments the drink count for a particular drink.
+main.drinkAdd = function(drink){
+    /**
+    *
+    */
 
-        */
-        main.drinks[type]["count"] += 1;
-        bac_update();
-    };
+    main.drinks[drink]["count"] += 1;
+    bac_update();
+};
 
-    main.drinkRemove = function(type){
-        if (main.drinks[type]["count"] > 0){
-            main.drinks[type]["count"] += -1;
-        }
-        bac_update();
-    };
+main.drinkRemove = function(drink){
+    /** Removes a serving of the selected drink.
+    * @param {string} drink - Name/ID of the selected drink.
+    * @returns {null}
+    */
+
+    // Prevents a negative drink count
+    if (main.drinks[drink]["count"] > 0){
+        main.drinks[drink]["count"] += -1;
+    }
+    bac_update();
+};
 
 
 });
