@@ -48,12 +48,12 @@
             <button ng-click="main.drinkRemove(drink)">Remove</button>
             You've taken: {{main.drinks[drink]["count"]}} {{drink}} 
             of volume 
-    <input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{main.drinks[drink]["std_volume"]*1000}}mL'>
+    <input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{main.drinks[drink]["standardVolume"]*1000}}mL'>
 
  
             and  alcohol content of
 
-<input type="number" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{main.drinks[drink]['alcohol_content']}}%">
+<input type="number" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{main.drinks[drink]['alcoholContent']}}%">
 
              .
             <button ng-click="main.drinkAdd(drink)">Add</button>
