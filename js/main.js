@@ -15,19 +15,18 @@
 
 angular.module('canIDrive', []).controller('MainController', function() {
 
+var main = this;
 
 // Variables
 
-var ethyl_const = 7.89;
+var ETHYL_CONSTANT = 7.89;
 
-var standard_alcohol_removal_factor = 0.015;
+var STANDARD_ALCOHOL_REMOVAL_FACTOR = 0.015;
 
-var widmark_factor = {
+var WIDMARK_FACTOR = {
     "male" : 0.7,
     "female" : 0.6
 };
-
-var main = this;
 
 // Default User Profile
 main.user = { "sex" : "male",
@@ -41,100 +40,112 @@ main.user = { "sex" : "male",
 
 // Preset Drinks
 main.drinks = { "Beer" : {"count" : 0,
-                          "alcohol_content" : 4.9,
-                          "std_volume" : 0.375,
+                          "alcoholContent" : 4.9,
+                          "standardVolume" : 0.375,
                           "img" : "beer.png"
                          },
                 "Wine" : {"count" : 0,
-                          "alcohol_content" : 11.6,
-                          "std_volume" : 0.15,
+                          "alcoholContent" : 11.6,
+                          "standardVolume" : 0.15,
                           "img" : "wine.png"
                          },
                 "Spirits" : {"count" : 0,
-                             "alcohol_content" : 45,
-                             "std_volume" : 0.03,
+                             "alcoholContent" : 45,
+                             "standardVolume" : 0.03,
                              "img" : "spirits.png"
                             },
                };
 
-
-
-// drink count * volume(ml) * percent-alc * 7.89 = g of alc5
-
 // Core Functions
 
-function bac_calc (consumed_alc, wid_factor, body_mass, removal_fac, time) {
+function bac_calc (consumedAlc, widFactor, bodyMass, removalFac, time) {
     /** Calculates the Blood Alcohol Content
-    * @returns {Number} - Blood Alcohol Content
-    */
-    var b = (((consumed_alc/(wid_factor*body_mass))*100)-(removal_fac*time));
+    * @params {float} consumedAlc - Consumed alcohol in grams
+    * @params {float} widFactor - Average constants
+    * @params {float} bodyMass - Body mass in kg
+    * @params {float} removalFac - Alcohol Removal Constant
+    * @params {float} time - Time in hours since drinking started.
 
-    return (b);
+    * @returns {float} - Blood Alcohol Content
+    */
+
+    var bac = (((consumedAlc/(widFactor*bodyMass))*100)-(removalFac*time));
+    return (bac);
 }
 
 
 function bac_update () {
-    // Variable Preparation
-    consumed_alc = 0;
+    /** Updates the Blood Alcohol Content
+    * @return {null}
+    */
+    consumedAlc = 0;
 
     for (var key in main.drinks) {
-        consumed_alc += main.drinks[key]["count"] * main.drinks[key]["std_volume"] * main.drinks[key]["alcohol_content"] * ethyl_const;
+        consumedAlc += main.drinks[key]["count"] *
+                       main.drinks[key]["standardVolume"] *
+                       main.drinks[key]["alcoholContent"] * ETHYL_CONSTANT;
     }
 
-    // main.user["bac"] = consumed_alc;
-    wid_factor = widmark_factor[main.user["sex"]];
-    body_mass = main.user["weight"]*1000; // Covered
-    removal_fac = standard_alcohol_removal_factor; // Covered
-    time = main.user["time"]; // Covered
-    bac = bac_calc(consumed_alc, wid_factor, body_mass, removal_fac, time); // Covered
+    widFactor = WIDMARK_FACTOR[main.user["sex"]];
+    bodyMass = main.user["weight"]*1000;
+    removalFac = STANDARD_ALCOHOL_REMOVAL_FACTOR;
+    time = main.user["time"];
+    bac = bac_calc(consumedAlc, widFactor, bodyMass, removalFac, time);
     main.user["bac"] = bac.toFixed(3);
 }
 
-function color_update (bac) {
-    /**
-    * @todo DO this
-    * @todo Do that
-    */
-}
 
-// Handlers
-
+// Handler functions
 
 main.newDrink = function(){
-    // drink_ID = main.drinks.length;
-    drink_ID = Object.keys(main.drinks).length;
-    console.log(drink_ID);
-    main.drinks[drink_ID] = {"count" : 0, "alcohol_content" : 45, "std_volume" : 0.03, "img" : "defaults.png"};
+    /** Adds a drink for the user to enter custom options and properties.
+    * @returns {null}
+    */
+    drinkID = Object.keys(main.drinks).length;
+    main.drinks[drinkID] = {"count" : 0,
+                            "alcoholContent" : 45,
+                            "standardVolume" : 0.03,
+                            "img" : "defaults.png"
+                           };
 };
 
 main.setSex = function(sex){
+    /** Updates the user sex for BAC calculation.
+    * @param {string} sex - male/female
+    * @returns {null}
+    */
     main.user["sex"] = sex;
     bac_update();
-};       
+};
 
-main.setAlcoholContent = function(drink_ID, content){
-    if (content < 0 || isNaN(content)) {
-        main.drinks[drink_ID]["alcohol_content"] = main.drinks[drink_ID]["alcohol_content"];
-    }
-    else{
-        main.drinks[drink_ID]["alcohol_content"] = content;
+main.setAlcoholContent = function(drinkID, content){
+    /** Sets alcohol content for a selected drink.
+    * @param {string} drinkID - Drink key.
+    * @returns {null}
+    */
+    if (content > 0 && isNaN(content) === false) {
+        main.drinks[drinkID]["alcoholContent"] = content;
     }
     bac_update();
 };
 
-main.setAlcoholVolume = function(drink_ID, volume){
+main.setAlcoholVolume = function(drinkID, volume){
+    /** Sets alcohol volume for a particular drink.
+    * @param {string} drinkID - Drink key.
+    * @returns {null}
+    */
     volume = volume/1000;
-    if (volume < 0 || isNaN(volume)) {
-       main.drinks[drink_ID]["std_volume"] = main.drinks[drink_ID]["std_volume"]; 
-    }
-    else{
-       main.drinks[drink_ID]["std_volume"] = volume;
+    if (volume > 0 && isNaN(volume) === false) {
+        main.drinks[drinkID]["standardVolume"] = volume;
     }
     bac_update();
 };
 
 main.setWeight = function (weight){
-    // Sets the weight
+    /** Sets the user weight.
+    * @param {float} weight - User weight in kg
+    * @returns {null}
+    */
     if (weight < 0 || isNaN(weight)) {
         main.user["weight"] = main.user["weight"];
     }
@@ -144,19 +155,23 @@ main.setWeight = function (weight){
     bac_update();
 };
 
-main.setTime = function (elapsed_time) {
-    if (elapsed_time < 0 || isNaN(elapsed_time)) {
+main.setTime = function (elapsedTime) {
+    /** Sets the elapsed time.
+    * @param {float} elapsedTime - Elapsed time in hours.
+    * @returns {null}
+    */
+    if (elapsedTime < 0 || isNaN(elapsedTime)) {
         main.user["time"] = main.user["time"];
     }else{
-        main.user["time"] = elapsed_time;
+        main.user["time"] = elapsedTime;
     }
     bac_update();
 };
 
-
 main.drinkAdd = function(drink){
-    /**
-    *
+    /** Adds a serving of the selected drink.
+    * @param {string} drink - Name/ID of the selected drink
+    * @returns {null}
     */
 
     main.drinks[drink]["count"] += 1;
