@@ -2,15 +2,16 @@
 * @file Main handler and processing code for the webapp.
 * @author Dragan Marjanovic <gagalug13@gmail.com>
 * @copyright Dragan Marjanovic 2015
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details. 
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. 
 */
 
 angular.module('canIDrive', []).controller('MainController', function() {
@@ -105,7 +106,7 @@ main.newDrink = function(){
     main.drinks[drinkID] = {"count" : 0,
                             "alcoholContent" : 45,
                             "standardVolume" : 0.03,
-                            "img" : "defaults.png"
+                            "img" : "default.png"
                            };
 };
 

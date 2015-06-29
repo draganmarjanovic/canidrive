@@ -1,4 +1,15 @@
-/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+/*Copyright (C) Dragan Marjanovic 2015
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. 
+*/
 
 html {
     color: #222;
@@ -56,26 +67,120 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+.wrapper{
+    width: 960px;
+    margin: 0 auto;
+}
 
+.center{
+    text-align: center;
+}
 
+body{
+    background-color: #212121;
+    color: white;
+    font-size: 24px;
+    margin: 20px;
+    /*text-align: center;*/
+}
 
+header{
+    margin-bottom: 40px;
+    border: 1px solid red;
+}
 
+paper-toolbar {
+    background-color: #212121;
+    height: 64px;
+}
 
+.drinkDiv{
+    /*border: 1px solid black;*/
+    /*border-bottom: 1px solid rgba(255,255,255,0.12);*/
+}
 
+section{
+    /*border: 1px solid blue;*/
+    /*border-bottom: 1px solid #F89614;*/
+}
 
+input[type="number"]{
+    outline: none;
+    background-color:rgba(0, 0, 0, 0);
+    border: none;
+    border-bottom: 2px solid #F89614;
+    font-size: 32px;
+    color: #F89614;
+    /*resize: horizontal;*/
+    /*width: 150px;*/
+}
+/*input:focus {
+        min-width: 200px;
+}
+*/
+footer{
+    border: 1px solid red;
+    margin-top: 60px;
+    font-size: 18px;
+}
 
+a{
+    color: #F89614;
+    text-decoration: none;
 
+}
 
+button{
+    color: black;
+}
 
+h3{
+    color: #F89614;
+}
 
+h4{
+    /*color: #F89614;*/
+}
 
+.percentage{
+    width: 100px;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    /*color:    #F89614;*/
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   /*color:    #F89614;*/
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   /*color:    #F89614;*/
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   /*color:    #F89614;*/
+}
+
+input:focus::-webkit-input-placeholder 
+{
+    color: transparent;
+}
 
 /* ==========================================================================
    Media Queries
    ========================================================================== */
 
-@media only screen and (min-width: 35em) {
+@media(max-width:720px) {
+    body {
+        background-color: lightblue;
+        margin: 0px;
+    }
+}
 
+@media (min-width:720px) and (max-width:990px) {
+    body{
+        background-color: blue;
+    }
 }
 
 @media print,

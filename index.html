@@ -1,5 +1,21 @@
+<!-- 
+* @file Main html page for the calculator.
+* @author Dragan Marjanovic <gagalug13@gmail.com>
+* @copyright Dragan Marjanovic 2015
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. 
+ -->
+
 <!doctype html>
-<html class="no-js" lang="" ng-app="canIDrive">
+<html class="no-js" lang="en" ng-app="canIDrive">
     <head>
         <script src="js/angular.min.js"></script>
         <meta charset="utf-8">
@@ -7,95 +23,130 @@
         <title>Can I Drive?</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="favicon.ico">
+
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+        <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
+
+
     </head>
     <body ng-controller="MainController as main">
         <!--[if lt IE 8]>.
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+<div class="wrapper">
 
-        <h1>Can I drive?</h1>
 
-<hr>
+<header class="center">
+<img src="img/beer_banner.png" height="" alt="Beer Banner Image">
+<h1>Can I Drive?</h1>
+<h5>Can I Drive will tell you exactly that (well, provide a reasonable blood alcohol estimate) as for your driving skills, it can't vouch for that.</h5>
+</header>
 
-    <h3>You:</h3>
+<section>
+    <h3>You</h3>
+    <p>You ought to tell us abit about yourself.</p>
     <input type="number" ng-model="user_weight" ng-blur="main.setWeight(user_weight); user_weight = null" placeholder="{{main.user['weight']}} kg">
     
-  <label>
+    <button ng-model="user_sex" value="male" ng-click="main.setSex('male')">male</button>
+    <button ng-model="user_sex" value="female" ng-click="main.setSex('female')">female</button>
+ 
+ <!--  <label>
     <input checked type="radio" ng-model="user_sex" value="male" ng-click="main.setSex(user_sex)">
     Male
   </label><br/>
   <label>
     <input type="radio" ng-model="user_sex" value="female" ng-click="main.setSex(user_sex)" />
     Female
-  </label><br/>
+  </label><br/> -->
   {{user_sex}}
+</section>
 
 
-
-<hr>
-        <h3>Drinks:</h3>
+<section>
+        <h3>Drinks</h3>
+        <p>What drinks have you had?</p>
 <button ng-click="main.newDrink()">New Drink</button>
 
         <div div="drinks_holder" ng-repeat="(drink, info) in main.drinks">
-            <h4>{{drink}}:</h4>
-            <img src="img/{{main.drinks[drink]['img']}}">
-            <button ng-click="main.drinkRemove(drink)">Remove</button>
-            You've taken: {{main.drinks[drink]["count"]}} {{drink}} 
-            of volume 
-    <input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{main.drinks[drink]["standardVolume"]*1000}}mL'>
 
- 
-            and  alcohol content of
+            <div id="{{drink}}" class="drinkDiv">
 
-<input type="number" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{main.drinks[drink]['alcoholContent']}}%">
+            <h4>Drink - {{drink}}</h4>
+<table>
+    <tr>
+        <td>Qty.</td><td>{{main.drinks[drink]["count"]}}</td>
+    </tr>
+    <tr>
+        <td>Volume</td><td>
 
-             .
-            <button ng-click="main.drinkAdd(drink)">Add</button>
+            <input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{main.drinks[drink]["standardVolume"]*1000}}mL'>
+    </td>
+    </tr>
+    <tr>
+        <td>Alcohol Content</td><td>
+
+<input type="number" class="percentage" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{main.drinks[drink]['alcoholContent']}}%">
+    </td>
+    </tr>
+</table>
+
+             
+            <!-- <button ng-click="main.drinkAdd(drink)">Add</button> -->
+
+
+            </div>
 
         </div>
+</section>
 
 
-<hr>
-        <h3>Time:</h3>
-        How many hours ago did you start drinking?  <br>
-        <input type="number" ng-model="elapsed_time" ng-blur="main.setTime(elapsed_time); elapsed_time = null" placeholder="{{main.user['time']}} hrs">
-
-
-
-<hr>
-        <h3>Result:</h3>
-        You have an approximate BAC reading of {{main.user["bac"]}} and
-        should/shouldn't drive for atleast another {{main.user["time"]}} hours.
-
-
-
-<hr>
-<a href="disclaimer.html">About / Disclaimer</a><br>
-Made by Dragan Marjanovic.
+<section>
+    <h3>Time</h3>
+    How many hours ago did you take your first swig?  <br>
+    <input type="number" 
+           ng-model="elapsed_time" 
+           ng-blur="main.setTime(elapsed_time); elapsed_time = null" 
+           placeholder="{{main.user['time']}} hrs">
+</section>
 
 
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<section>
+    <h3>Result</h3>
+    You have an approximate BAC reading of {{main.user["bac"]}} and
+    should/shouldn't drive for atleast another {{main.user["time"]}} hours.
+</section>
 
 
 
+<footer class="center">
+    <a href="disclaimer.html">About / Disclaimer</a><br>
+    Copyright <a href="#">Dragan Marjanovic</a> 2015.
+</footer>
+
+
+
+</div>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <!-- Google Analytics -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
             e.src='//www.google-analytics.com/analytics.js';
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+            ga('create','UA-64086966-3','auto');ga('send','pageview');
         </script>
     </body>
 </html>
