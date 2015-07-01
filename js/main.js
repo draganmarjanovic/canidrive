@@ -35,7 +35,8 @@ main.user = { "sex" : "male",
               "bac" : 0.00,
               "drive" : false,
               "time" : 0,
-              "color" : "#607D8B"
+              "color" : "#607D8B",
+              "recommendation" : "probably can"
 
 };
 
@@ -92,7 +93,15 @@ function bac_update () {
     removalFac = STANDARD_ALCOHOL_REMOVAL_FACTOR;
     time = main.user["time"];
     bac = bac_calc(consumedAlc, widFactor, bodyMass, removalFac, time);
-    main.user["bac"] = bac.toFixed(3);
+    bac = bac.toFixed(3);
+    if (bac <= 0) {
+        main.user["bac"] = 0;
+        main.user["recommendation"] = "probably can";
+    }
+    else{
+        main.user["bac"] = bac;
+        main.user["recommendation"] = "shouldn't";
+    }
 }
 
 
@@ -102,7 +111,8 @@ main.newDrink = function(){
     /** Adds a drink for the user to enter custom options and properties.
     * @returns {null}
     */
-    drinkID = Object.keys(main.drinks).length;
+    drinkNumber = Object.keys(main.drinks).length;
+    drinkID = "Drink " + drinkNumber;
     main.drinks[drinkID] = {"count" : 0,
                             "alcoholContent" : 45,
                             "standardVolume" : 0.03,
@@ -192,6 +202,12 @@ main.drinkRemove = function(drink){
     bac_update();
 };
 
+main.setDrinkCount = function(drink, drink_count){
+    if (drink_count > 0 && isNaN(drink_count) === false) {
+        main.drinks[drink]["count"] = drink_count;
+    }
+    bac_update();
+};
 
 });
 
