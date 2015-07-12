@@ -41,22 +41,24 @@ main.user = { "sex" : "male",
 };
 
 // Preset Drinks
-main.drinks = { "Beer" : {"count" : 0,
+main.drinks = [ {"Beer" : {"count" : 0,
                           "alcoholContent" : 4.9,
                           "standardVolume" : 0.375,
                           "img" : "beer.png"
-                         },
-                "Wine" : {"count" : 0,
+                         }},
+                {"Wine" : {"count" : 0,
                           "alcoholContent" : 11.6,
                           "standardVolume" : 0.15,
                           "img" : "wine.png"
-                         },
-                "Spirits" : {"count" : 0,
+                         }},
+                {"Spirits" : {"count" : 0,
                              "alcoholContent" : 45,
                              "standardVolume" : 0.03,
                              "img" : "spirits.png"
-                            },
-               };
+                            }},
+               ];
+
+main.drinksIndex = {"Beer":0, "Wine":1, "Spirits":2}
 
 // Core Functions
 
@@ -78,7 +80,7 @@ function bac_calc (consumedAlc, widFactor, bodyMass, removalFac, time) {
 
 function bac_update () {
     /** Updates the Blood Alcohol Content
-    * @return {null}
+    * @return {None}
     */
     consumedAlc = 0;
 
@@ -109,21 +111,29 @@ function bac_update () {
 
 main.newDrink = function(){
     /** Adds a drink for the user to enter custom options and properties.
-    * @returns {null}
+    * @returns {None}
     */
     drinkNumber = Object.keys(main.drinks).length;
     drinkID = "Drink " + drinkNumber;
-    main.drinks[drinkID] = {"count" : 0,
+    main.drinks.push({
+        key: drinkID,
+        value: {"count" : 0,
                             "alcoholContent" : 45,
                             "standardVolume" : 0.03,
                             "img" : "default.png"
-                           };
+                           }
+        });
+    // main.drinks[drinkID] = {"count" : 0,
+    //                         "alcoholContent" : 45,
+    //                         "standardVolume" : 0.03,
+    //                         "img" : "default.png"
+    //                        };
 };
 
 main.setSex = function(sex){
     /** Updates the user sex for BAC calculation.
     * @param {string} sex - male/female
-    * @returns {null}
+    * @returns {None}
     */
     main.user["sex"] = sex;
     bac_update();
@@ -132,7 +142,7 @@ main.setSex = function(sex){
 main.setAlcoholContent = function(drinkID, content){
     /** Sets alcohol content for a selected drink.
     * @param {string} drinkID - Drink key.
-    * @returns {null}
+    * @returns {None}
     */
     if (content > 0 && isNaN(content) === false) {
         main.drinks[drinkID]["alcoholContent"] = content;
@@ -143,7 +153,7 @@ main.setAlcoholContent = function(drinkID, content){
 main.setAlcoholVolume = function(drinkID, volume){
     /** Sets alcohol volume for a particular drink.
     * @param {string} drinkID - Drink key.
-    * @returns {null}
+    * @returns {None}
     */
     volume = volume/1000;
     if (volume > 0 && isNaN(volume) === false) {
@@ -155,7 +165,7 @@ main.setAlcoholVolume = function(drinkID, volume){
 main.setWeight = function (weight){
     /** Sets the user weight.
     * @param {float} weight - User weight in kg
-    * @returns {null}
+    * @returns {None}
     */
     if (weight < 0 || isNaN(weight)) {
         main.user["weight"] = main.user["weight"];
@@ -169,7 +179,7 @@ main.setWeight = function (weight){
 main.setTime = function (elapsedTime) {
     /** Sets the elapsed time.
     * @param {float} elapsedTime - Elapsed time in hours.
-    * @returns {null}
+    * @returns {None}
     */
     if (elapsedTime < 0 || isNaN(elapsedTime)) {
         main.user["time"] = main.user["time"];
@@ -182,7 +192,7 @@ main.setTime = function (elapsedTime) {
 main.drinkAdd = function(drink){
     /** Adds a serving of the selected drink.
     * @param {string} drink - Name/ID of the selected drink
-    * @returns {null}
+    * @returns {None}
     */
 
     main.drinks[drink]["count"] += 1;
@@ -192,7 +202,7 @@ main.drinkAdd = function(drink){
 main.drinkRemove = function(drink){
     /** Removes a serving of the selected drink.
     * @param {string} drink - Name/ID of the selected drink.
-    * @returns {null}
+    * @returns {None}
     */
 
     // Prevents a negative drink count

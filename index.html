@@ -54,54 +54,32 @@ GNU General Public License for more details.
     <h3>You</h3>
     <p>You ought to tell us abit about yourself.</p>
     <input type="number" ng-model="user_weight" ng-blur="main.setWeight(user_weight); user_weight = null" placeholder="{{main.user['weight']}} kg">
-    
-    <button ng-model="user_sex" value="male" ng-click="main.setSex('male')">male</button>
-    <button ng-model="user_sex" value="female" ng-click="main.setSex('female')">female</button>
- 
- <!--  <label>
-    <input checked type="radio" ng-model="user_sex" value="male" ng-click="main.setSex(user_sex)">
-    Male
-  </label><br/>
-  <label>
-    <input type="radio" ng-model="user_sex" value="female" ng-click="main.setSex(user_sex)" />
-    Female
-  </label><br/> -->
-  {{user_sex}}
+    <br>
+
+
+    <div class="sex male sex_selected" ng-click="main.setSex('male')">Male</div>
+    <div class="sex female" ng-click="main.setSex('female')">Female</div>
+
 </section>
 
 
 <section>
         <h3>Drinks</h3>
         <p>What drinks have you had?</p>
-<button ng-click="main.newDrink()">New Drink</button>
+        <a href="#" ng-click="main.newDrink()">Add Drink</a>
 
         <div div="drinks_holder" ng-repeat="(drink, info) in main.drinks">
 
             <div id="{{drink}}" class="drinkDiv">
 
-            <h4>Drink - {{drink}}</h4>
-<table>
-    <tr>
-        <td>Qty.</td><td>{{main.drinks[drink]["count"]}}</td>
-    </tr>
-    <tr>
-        <td>Volume</td><td>
+            <h4>{{drink}}</h4>
 
-            <input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{main.drinks[drink]["standardVolume"]*1000}}mL'>
-    </td>
-    </tr>
-    <tr>
-        <td>Alcohol Content</td><td>
+<input type="number" ng-model="drink_servings" ng-blur="main.setDrinkCount(drink, drink_servings); drink_servings = null" placeholder="{{main.drinks[main.drinksIndex[drink]][drink]['count']}} servings" >
 
-<input type="number" class="percentage" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{main.drinks[drink]['alcoholContent']}}%">
-    </td>
-    </tr>
-</table>
+<input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{main.drinks[main.drinksIndex[drink]][drink]["standardVolume"]*1000}} mL'>
 
+<input type="number" class="percentage" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{main.drinks[main.drinksIndex[drink]][drink]['alcoholContent']}}%">
              
-            <!-- <button ng-click="main.drinkAdd(drink)">Add</button> -->
-
-
             </div>
 
         </div>
@@ -110,7 +88,7 @@ GNU General Public License for more details.
 
 <section>
     <h3>Time</h3>
-    How many hours ago did you take your first swig?  <br>
+    <p>How many hours ago did you take your first swig?</p>
     <input type="number" 
            ng-model="elapsed_time" 
            ng-blur="main.setTime(elapsed_time); elapsed_time = null" 
@@ -122,8 +100,8 @@ GNU General Public License for more details.
 
 <section>
     <h3>Result</h3>
-    You have an approximate BAC reading of {{main.user["bac"]}} and
-    should/shouldn't drive for atleast another {{main.user["time"]}} hours.
+    <p>    You have an approximate BAC reading of <span class="orange">{{main.user["bac"]}}</span> and
+    {{main.user["recommendation"]}} drive.</p>
 </section>
 
 
