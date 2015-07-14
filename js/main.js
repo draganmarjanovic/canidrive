@@ -41,24 +41,31 @@ main.user = { "sex" : "male",
 };
 
 // Preset Drinks
-main.drinks = [ {"Beer" : {"count" : 0,
-                          "alcoholContent" : 4.9,
-                          "standardVolume" : 0.375,
-                          "img" : "beer.png"
-                         }},
-                {"Wine" : {"count" : 0,
-                          "alcoholContent" : 11.6,
-                          "standardVolume" : 0.15,
-                          "img" : "wine.png"
-                         }},
-                {"Spirits" : {"count" : 0,
-                             "alcoholContent" : 45,
-                             "standardVolume" : 0.03,
-                             "img" : "spirits.png"
-                            }},
+
+main.drinks = [ {
+                name : "Beer",
+                "count" : 0,
+                "alcoholContent" : 4.9,
+                "standardVolume" : 0.375,
+                "img" : "beer.png"
+                },
+                {
+                name : "Wine",
+                "count" : 0,
+                "alcoholContent" : 11.6,
+                "standardVolume" : 0.15,
+                "img" : "wine.png"
+                },
+                {
+                name : "Spirits",
+                "count" : 0,
+                "alcoholContent" : 45,
+                "standardVolume" : 0.03,
+                "img" : "spirits.png"
+                }
                ];
 
-main.drinksIndex = {"Beer":0, "Wine":1, "Spirits":2}
+// main.drinksIndex = {"Beer":0, "Wine":1, "Spirits":2};
 
 // Core Functions
 
@@ -96,8 +103,8 @@ function bac_update () {
     time = main.user["time"];
     bac = bac_calc(consumedAlc, widFactor, bodyMass, removalFac, time);
     bac = bac.toFixed(3);
-    if (bac <= 0) {
-        main.user["bac"] = 0;
+    if (bac <= 0.05) {
+        main.user["bac"] = bac;
         main.user["recommendation"] = "probably can";
     }
     else{
@@ -113,21 +120,17 @@ main.newDrink = function(){
     /** Adds a drink for the user to enter custom options and properties.
     * @returns {None}
     */
+    window.alert("test");
     drinkNumber = Object.keys(main.drinks).length;
     drinkID = "Drink " + drinkNumber;
-    main.drinks.push({
-        key: drinkID,
-        value: {"count" : 0,
-                            "alcoholContent" : 45,
-                            "standardVolume" : 0.03,
-                            "img" : "default.png"
-                           }
-        });
-    // main.drinks[drinkID] = {"count" : 0,
-    //                         "alcoholContent" : 45,
-    //                         "standardVolume" : 0.03,
-    //                         "img" : "default.png"
-    //                        };
+
+    main.drinks.push({ "name" : drinkID,
+                "count" : 0,
+                "alcoholContent" : 0,
+                "standardVolume" : 0.03,
+                "img" : "default.png"
+                });
+
 };
 
 main.setSex = function(sex){
@@ -135,29 +138,31 @@ main.setSex = function(sex){
     * @param {string} sex - male/female
     * @returns {None}
     */
-    main.user["sex"] = sex;
+    main.user.sex = sex;
     bac_update();
 };
 
-main.setAlcoholContent = function(drinkID, content){
+main.setAlcoholContent = function(drink, content){
     /** Sets alcohol content for a selected drink.
     * @param {string} drinkID - Drink key.
     * @returns {None}
     */
     if (content > 0 && isNaN(content) === false) {
-        main.drinks[drinkID]["alcoholContent"] = content;
+        drink.alcoholContent = content;
     }
+    console.log(main.drinks);
     bac_update();
 };
 
-main.setAlcoholVolume = function(drinkID, volume){
+main.setAlcoholVolume = function(drink, volume){
     /** Sets alcohol volume for a particular drink.
     * @param {string} drinkID - Drink key.
     * @returns {None}
     */
     volume = volume/1000;
     if (volume > 0 && isNaN(volume) === false) {
-        main.drinks[drinkID]["standardVolume"] = volume;
+        drink.standardVolume = volume;
+        // main.drinks[drinkID]["standardVolume"] = volume;
     }
     bac_update();
 };
@@ -213,8 +218,9 @@ main.drinkRemove = function(drink){
 };
 
 main.setDrinkCount = function(drink, drink_count){
-    if (drink_count > 0 && isNaN(drink_count) === false) {
-        main.drinks[drink]["count"] = drink_count;
+    if (drink_count >= 0 && isNaN(drink_count) === false) {
+        drink.count = drink_count;
+        // main.drinks[drink]["count"] = drink_count;
     }
     bac_update();
 };

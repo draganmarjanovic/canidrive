@@ -26,6 +26,13 @@ GNU General Public License for more details.
         <link rel="icon" type="image/png" href="favicon.ico">
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <meta name="apple-mobile-web-app-capable"
+      content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style"
+      content="default" />
+      <meta name="viewport"
+    content="user-scalable=no, width=device-width" />
+
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
@@ -47,7 +54,7 @@ GNU General Public License for more details.
 <header class="center">
 <img src="img/beer_banner.png" height="" alt="Beer Banner Image">
 <h1>Can I Drive?</h1>
-<h5>Can I Drive will tell you exactly that (well, provide a reasonable blood alcohol estimate) as for your driving skills, it can't vouch for that.</h5>
+<h5>Can I Drive will tell you exactly that (well, provide a reasonable blood alcohol estimate) it can't however vouch for your driving skills.</h5>
 </header>
 
 <section>
@@ -56,9 +63,13 @@ GNU General Public License for more details.
     <input type="number" ng-model="user_weight" ng-blur="main.setWeight(user_weight); user_weight = null" placeholder="{{main.user['weight']}} kg">
     <br>
 
+<form name="sex">
+<input name="sex" id="male"type="radio" ng-click="main.setSex('male')" checked/>
+<label class="sex male" for="male">Male</label>
 
-    <div class="sex male sex_selected" ng-click="main.setSex('male')">Male</div>
-    <div class="sex female" ng-click="main.setSex('female')">Female</div>
+<input name="sex" id="female"type="radio" ng-click="main.setSex('female')" />
+<label class="sex female" for="female">Female</label>
+</form>
 
 </section>
 
@@ -68,17 +79,16 @@ GNU General Public License for more details.
         <p>What drinks have you had?</p>
         <a href="#" ng-click="main.newDrink()">Add Drink</a>
 
-        <div div="drinks_holder" ng-repeat="(drink, info) in main.drinks">
+        <div div="drinks_holder" ng-repeat="drink in main.drinks">
+            <div id="{{main.drinks[drink]['name']}}" class="drinkDiv">
 
-            <div id="{{drink}}" class="drinkDiv">
+            <h4>{{drink.name}}</h4>
 
-            <h4>{{drink}}</h4>
+<input type="number" ng-model="drink_servings" ng-blur="main.setDrinkCount(drink, drink_servings); drink_servings = null" placeholder="{{drink.count}} servings" >
 
-<input type="number" ng-model="drink_servings" ng-blur="main.setDrinkCount(drink, drink_servings); drink_servings = null" placeholder="{{main.drinks[main.drinksIndex[drink]][drink]['count']}} servings" >
+<input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{drink.standardVolume*1000}} mL'>
 
-<input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{main.drinks[main.drinksIndex[drink]][drink]["standardVolume"]*1000}} mL'>
-
-<input type="number" class="percentage" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{main.drinks[main.drinksIndex[drink]][drink]['alcoholContent']}}%">
+<input type="number" class="percentage" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{drink.alcoholContent}}%">
              
             </div>
 
