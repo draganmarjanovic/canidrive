@@ -1,4 +1,15 @@
-/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+/*Copyright (C) Dragan Marjanovic 2015
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. 
+*/
 
 html {
     color: #222;
@@ -57,26 +68,209 @@ textarea {
    ========================================================================== */
 
 
+/*Checkbox Styling*/
+input[type="radio"] {
+    display:none;
+}
+
+input[type="radio"]:checked + label{
+    background: green;
+}
+
+.sex{
+    padding: 2.5px;
+    /*border: 1px solid red;*/
+    width: 100px;
+    margin: 10px;
+    margin-left: 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: 20px;
+    color: rgba(0,0,0, .87);
+    text-align: center;
+    display: inline-block;
+}
+
+.male{background-color: rgb(68,108,179);}
+
+.male:hover{background-color: rgb(48,88,159);}
+
+.male:active{background-color: rgb(28,68,139);}
+
+.male_chosen{background-color: rgb(28,68,139);}
+
+.female{background-color: rgb(210, 82, 127);}
+
+.female:hover{background-color: rgb(190, 62, 107);}
+
+.female:active{background-color: rgb(170, 52, 87);}
+
+.female_chosen{background-color: rgb(170, 52, 87);}
 
 
 
 
 
+/*End Checkbox Styling*/
+.wrapper{
+    width: 960px;
+    margin: 0 auto;
+
+    /*border: 1px solid blue;*/
+}
+
+.center{
+    text-align: center;
+}
+
+body{
+    background-color: #212121;
+    color: white;
+    font-size: 24px;
+    margin: 20px;
+    /*text-align: center;*/
+
+    -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+header{
+    margin-bottom: 40px;
+    /*border: 1px solid red;*/
+}
+
+h1{
+    margin-bottom: 0;
+}
+
+paper-toolbar {
+    background-color: #212121;
+    height: 64px;
+}
+
+.drinkDiv{
+    /*border: 1px solid black;*/
+    /*border-bottom: 1px solid rgba(255,255,255,0.12);*/
+    margin-bottom: 20px;
+}
+
+section{
+    /*border: 1px solid blue;*/
+    /*border-bottom: 1px solid #F89614;*/
+}
+
+input[type="number"]{
+    outline: none;
+    background-color:rgba(0, 0, 0, 0);
+    border: none;
+    border-bottom: 2px solid #F89614;
+    font-size: 32px;
+    color: #F89614;
+}
+
+footer{
+    /*border: 1px solid red;*/
+    margin-top: 60px;
+    font-size: 18px;
+}
+
+a{
+    color: #F89614;
+    text-decoration: none;
+
+}
+
+button{
+    color: black;
+}
+
+h3{
+    color: #F89614;
+    margin: 0;
+    margin-top: 40px;
+}
+
+.orange{
+    color: #F89614;
+}
+
+h5{
+    font-weight: 100;
+    font-size: 26px;
+    margin: 0;
+    margin-top: 15px;
+    margin-bottom: 60px;
+    /*border: 1px solid red;*/
+}
 
 
+p{
+    margin: 0;
+    font-size: 20px;
+}
 
+h4{
+    margin: 0;
+    /*color: #F89614;*/
+}
 
+.percentage{
+    /*width: 100px;*/
+}
 
+input[type="number"]{
+    width: 300px;
+}
 
+::-webkit-input-placeholder { /* WebKit browsers */
+    /*color:    #F89614;*/
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   /*color:    #F89614;*/
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   /*color:    #F89614;*/
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   /*color:    #F89614;*/
+}
+
+input:focus::-webkit-input-placeholder 
+{
+    color: transparent;
+}
 
 
 /* ==========================================================================
    Media Queries
    ========================================================================== */
 
-@media only screen and (min-width: 35em) {
+@media(max-width:990px) {
+    input{
+        display: block;
+        margin: auto;
+    }
+
+    body{
+        text-align: center;
+    }
+    .wrapper{
+        width: 100%;
+    }
+    .sex{
+        display: inline-block;
+    }
 
 }
+
+
 
 @media print,
        (-o-min-device-pixel-ratio: 5/4),

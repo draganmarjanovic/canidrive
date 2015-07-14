@@ -2,15 +2,16 @@
 * @file Main handler and processing code for the webapp.
 * @author Dragan Marjanovic <gagalug13@gmail.com>
 * @copyright Dragan Marjanovic 2015
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details. 
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. 
 */
 
 angular.module('canIDrive', []).controller('MainController', function() {
@@ -34,27 +35,37 @@ main.user = { "sex" : "male",
               "bac" : 0.00,
               "drive" : false,
               "time" : 0,
-              "color" : "#607D8B"
+              "color" : "#607D8B",
+              "recommendation" : "probably can"
 
 };
 
 // Preset Drinks
-main.drinks = { "Beer" : {"count" : 0,
-                          "alcoholContent" : 4.9,
-                          "standardVolume" : 0.375,
-                          "img" : "beer.png"
-                         },
-                "Wine" : {"count" : 0,
-                          "alcoholContent" : 11.6,
-                          "standardVolume" : 0.15,
-                          "img" : "wine.png"
-                         },
-                "Spirits" : {"count" : 0,
-                             "alcoholContent" : 45,
-                             "standardVolume" : 0.03,
-                             "img" : "spirits.png"
-                            },
-               };
+
+main.drinks = [ {
+                name : "Beer",
+                "count" : 0,
+                "alcoholContent" : 4.9,
+                "standardVolume" : 0.375,
+                "img" : "beer.png"
+                },
+                {
+                name : "Wine",
+                "count" : 0,
+                "alcoholContent" : 11.6,
+                "standardVolume" : 0.15,
+                "img" : "wine.png"
+                },
+                {
+                name : "Spirits",
+                "count" : 0,
+                "alcoholContent" : 45,
+                "standardVolume" : 0.03,
+                "img" : "spirits.png"
+                }
+               ];
+
+// main.drinksIndex = {"Beer":0, "Wine":1, "Spirits":2};
 
 // Core Functions
 
@@ -76,7 +87,7 @@ function bac_calc (consumedAlc, widFactor, bodyMass, removalFac, time) {
 
 function bac_update () {
     /** Updates the Blood Alcohol Content
-    * @return {null}
+    * @return {None}
     */
     consumedAlc = 0;
 
@@ -91,7 +102,15 @@ function bac_update () {
     removalFac = STANDARD_ALCOHOL_REMOVAL_FACTOR;
     time = main.user["time"];
     bac = bac_calc(consumedAlc, widFactor, bodyMass, removalFac, time);
-    main.user["bac"] = bac.toFixed(3);
+    bac = bac.toFixed(3);
+    if (bac <= 0.05) {
+        main.user["bac"] = bac;
+        main.user["recommendation"] = "probably can";
+    }
+    else{
+        main.user["bac"] = bac;
+        main.user["recommendation"] = "shouldn't";
+    }
 }
 
 
@@ -99,44 +118,51 @@ function bac_update () {
 
 main.newDrink = function(){
     /** Adds a drink for the user to enter custom options and properties.
-    * @returns {null}
+    * @returns {None}
     */
-    drinkID = Object.keys(main.drinks).length;
-    main.drinks[drinkID] = {"count" : 0,
-                            "alcoholContent" : 45,
-                            "standardVolume" : 0.03,
-                            "img" : "defaults.png"
-                           };
+    window.alert("test");
+    drinkNumber = Object.keys(main.drinks).length;
+    drinkID = "Drink " + drinkNumber;
+
+    main.drinks.push({ "name" : drinkID,
+                "count" : 0,
+                "alcoholContent" : 0,
+                "standardVolume" : 0.03,
+                "img" : "default.png"
+                });
+
 };
 
 main.setSex = function(sex){
     /** Updates the user sex for BAC calculation.
     * @param {string} sex - male/female
-    * @returns {null}
+    * @returns {None}
     */
-    main.user["sex"] = sex;
+    main.user.sex = sex;
     bac_update();
 };
 
-main.setAlcoholContent = function(drinkID, content){
+main.setAlcoholContent = function(drink, content){
     /** Sets alcohol content for a selected drink.
     * @param {string} drinkID - Drink key.
-    * @returns {null}
+    * @returns {None}
     */
     if (content > 0 && isNaN(content) === false) {
-        main.drinks[drinkID]["alcoholContent"] = content;
+        drink.alcoholContent = content;
     }
+    console.log(main.drinks);
     bac_update();
 };
 
-main.setAlcoholVolume = function(drinkID, volume){
+main.setAlcoholVolume = function(drink, volume){
     /** Sets alcohol volume for a particular drink.
     * @param {string} drinkID - Drink key.
-    * @returns {null}
+    * @returns {None}
     */
     volume = volume/1000;
     if (volume > 0 && isNaN(volume) === false) {
-        main.drinks[drinkID]["standardVolume"] = volume;
+        drink.standardVolume = volume;
+        // main.drinks[drinkID]["standardVolume"] = volume;
     }
     bac_update();
 };
@@ -144,7 +170,7 @@ main.setAlcoholVolume = function(drinkID, volume){
 main.setWeight = function (weight){
     /** Sets the user weight.
     * @param {float} weight - User weight in kg
-    * @returns {null}
+    * @returns {None}
     */
     if (weight < 0 || isNaN(weight)) {
         main.user["weight"] = main.user["weight"];
@@ -158,7 +184,7 @@ main.setWeight = function (weight){
 main.setTime = function (elapsedTime) {
     /** Sets the elapsed time.
     * @param {float} elapsedTime - Elapsed time in hours.
-    * @returns {null}
+    * @returns {None}
     */
     if (elapsedTime < 0 || isNaN(elapsedTime)) {
         main.user["time"] = main.user["time"];
@@ -171,7 +197,7 @@ main.setTime = function (elapsedTime) {
 main.drinkAdd = function(drink){
     /** Adds a serving of the selected drink.
     * @param {string} drink - Name/ID of the selected drink
-    * @returns {null}
+    * @returns {None}
     */
 
     main.drinks[drink]["count"] += 1;
@@ -181,7 +207,7 @@ main.drinkAdd = function(drink){
 main.drinkRemove = function(drink){
     /** Removes a serving of the selected drink.
     * @param {string} drink - Name/ID of the selected drink.
-    * @returns {null}
+    * @returns {None}
     */
 
     // Prevents a negative drink count
@@ -191,6 +217,13 @@ main.drinkRemove = function(drink){
     bac_update();
 };
 
+main.setDrinkCount = function(drink, drink_count){
+    if (drink_count >= 0 && isNaN(drink_count) === false) {
+        drink.count = drink_count;
+        // main.drinks[drink]["count"] = drink_count;
+    }
+    bac_update();
+};
 
 });
 
