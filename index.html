@@ -1,5 +1,5 @@
 <!-- 
-* @file Main html page for the calculator.
+* @file Main page for the calculator.
 * @author Dragan Marjanovic <gagalug13@gmail.com>
 * @copyright Dragan Marjanovic 2015
 
@@ -16,125 +16,138 @@ GNU General Public License for more details.
 
 <!doctype html>
 <html class="no-js" lang="en" ng-app="canIDrive">
-    <head>
-        <script src="js/angular.min.js"></script>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Can I Drive?</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/png" href="favicon.ico">
+  <head>
+    <script src="js/angular.min.js"></script>
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <meta name="apple-mobile-web-app-capable"
-      content="yes" />
-      <meta name="apple-mobile-web-app-status-bar-style"
-      content="default" />
-      <meta name="viewport"
-    content="user-scalable=no, width=device-width" />
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Can I Drive?</title>
+    <meta name="description" content="Estimate your Blood Alcohol Level.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.ico">
+
+    <!-- Webapp -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable"
+    content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style"
+    content="default" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  
+  <body ng-controller="MainController as main">
+
+<!--[if lt IE 8]>.
+  <p class="browserupgrade">You are using an <strong>outdated</strong> browser.
+  Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+  your experience.</p>
+<![endif]-->
+
+    <div class="wrapper">
+
+      <header class="center">
+        <img src="img/beer_banner.png" height="" alt="Beer Banner Image">
+        <h1>Can I Drive?</h1>
+        <h5>Can I Drive will tell you exactly that (well, provide a reasonable
+          blood alcohol estimate) it can't however vouch for your driving 
+          skills.
+        </h5>
+      </header>
+
+      <section>
+        <h3>You</h3>
+        <p>You ought to tell us abit about yourself.</p>
+        <input type="number" ng-model="user_weight" 
+                             ng-blur="main.setWeight(user_weight);
+                                      user_weight = null" 
+                             placeholder="{{main.user['weight']}} kg">
+        <br>
+
+        <form name="sex">
+          <input name="sex" id="male" type="radio" 
+                 ng-click="main.setSex('male')" checked/>
+          <label class="sex male" for="male">Male</label>
+
+          <input name="sex" id="female" type="radio"
+                 ng-click="main.setSex('female')" />
+          <label class="sex female" for="female">Female</label>
+        </form>
+
+      </section>
 
 
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
-
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-
-        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-        <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
-
-
-    </head>
-    <body ng-controller="MainController as main">
-        <!--[if lt IE 8]>.
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-<div class="wrapper">
-
-
-<header class="center">
-<img src="img/beer_banner.png" height="" alt="Beer Banner Image">
-<h1>Can I Drive?</h1>
-<h5>Can I Drive will tell you exactly that (well, provide a reasonable blood alcohol estimate) it can't however vouch for your driving skills.</h5>
-</header>
-
-<section>
-    <h3>You</h3>
-    <p>You ought to tell us abit about yourself.</p>
-    <input type="number" ng-model="user_weight" ng-blur="main.setWeight(user_weight); user_weight = null" placeholder="{{main.user['weight']}} kg">
-    <br>
-
-<form name="sex">
-<input name="sex" id="male"type="radio" ng-click="main.setSex('male')" checked/>
-<label class="sex male" for="male">Male</label>
-
-<input name="sex" id="female"type="radio" ng-click="main.setSex('female')" />
-<label class="sex female" for="female">Female</label>
-</form>
-
-</section>
-
-
-<section>
+      <section>
         <h3>Drinks</h3>
         <p>What drinks have you had?</p>
         <a href="#" ng-click="main.newDrink()">Add Drink</a>
 
         <div div="drinks_holder" ng-repeat="drink in main.drinks">
-            <div id="{{main.drinks[drink]['name']}}" class="drinkDiv">
-
+          <div id="{{main.drinks[drink]['name']}}" class="drinkDiv">
             <h4>{{drink.name}}</h4>
+            <input type="number" ng-model="drink_servings" 
+                                 ng-blur="main.setDrinkCount(drink, 
+                                                             drink_servings); 
+                                          drink_servings = null" 
+                                 placeholder="{{drink.count}} servings" >
 
-<input type="number" ng-model="drink_servings" ng-blur="main.setDrinkCount(drink, drink_servings); drink_servings = null" placeholder="{{drink.count}} servings" >
+            <input type="number" ng-model="alc_volume" 
+                                 ng-blur="main.setAlcoholVolume(drink,
+                                                                alc_volume); 
+                                          alc_volume = null"
+                                 placeholder='{{drink.standardVolume*1000}} mL'>
 
-<input type="number" ng-model="alc_volume" ng-blur="main.setAlcoholVolume(drink, alc_volume); alc_volume = null" placeholder='{{drink.standardVolume*1000}} mL'>
+            <input type="number" ng-model="alc_cont" 
+                                 ng-blur="main.setAlcoholContent(drink,
+                                                                 alc_cont); 
+                                          alc_cont = null"
+                                 placeholder="{{drink.alcoholContent}}%">
 
-<input type="number" class="percentage" ng-model="alc_cont" ng-blur="main.setAlcoholContent(drink, alc_cont); alc_cont = null" placeholder="{{drink.alcoholContent}}%">
-             
-            </div>
-
+          </div>
         </div>
-</section>
+      </section>
 
 
-<section>
-    <h3>Time</h3>
-    <p>How many hours ago did you take your first swig?</p>
-    <input type="number" 
-           ng-model="elapsed_time" 
-           ng-blur="main.setTime(elapsed_time); elapsed_time = null" 
-           placeholder="{{main.user['time']}} hrs">
-</section>
+      <section>
+        <h3>Time</h3>
+        <p>How many hours ago did you take your first swig?</p>
+        <input type="number" 
+               ng-model="elapsed_time" 
+               ng-blur="main.setTime(elapsed_time); elapsed_time = null" 
+               placeholder="{{main.user['time']}} hrs">
+      </section>
+
+      <section>
+        <h3>Result</h3>
+        <p>You have an approximate BAC reading of 
+           <span class="orange">{{main.user["bac"]}}</span> and 
+           {{main.user["recommendation"]}} drive.
+        </p>
+      </section>
 
 
+      <footer class="center">
+        <a href="disclaimer.html">About / Disclaimer</a><br>
+        Copyright <a href="#">Dragan Marjanovic</a> 2015.
+      </footer>
 
 
-<section>
-    <h3>Result</h3>
-    <p>    You have an approximate BAC reading of <span class="orange">{{main.user["bac"]}}</span> and
-    {{main.user["recommendation"]}} drive.</p>
-</section>
+    </div>
 
+    <script src="js/main.js"></script>
 
-
-<footer class="center">
-    <a href="disclaimer.html">About / Disclaimer</a><br>
-    Copyright <a href="#">Dragan Marjanovic</a> 2015.
-</footer>
-
-
-
-</div>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-
-        <!-- Google Analytics -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-64086966-3','auto');ga('send','pageview');
-        </script>
-    </body>
+    <!-- Google Analytics -->
+    <script>
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','UA-64086966-3','auto');ga('send','pageview');
+    </script>
+  </body>
 </html>
