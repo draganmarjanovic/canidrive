@@ -108,16 +108,11 @@ input[type="radio"]:checked + label{
 
 .female_chosen{background-color: rgb(170, 52, 87);}
 
-
-
-
-
 /*End Checkbox Styling*/
+
 .wrapper{
     width: 960px;
     margin: 0 auto;
-
-    /*border: 1px solid blue;*/
 }
 
 .center{
@@ -129,19 +124,17 @@ body{
     color: white;
     font-size: 24px;
     margin: 20px;
-    /*text-align: center;*/
 
     -webkit-touch-callout: none;
--webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 header{
     margin-bottom: 40px;
-    /*border: 1px solid red;*/
 }
 
 h1{
@@ -154,14 +147,7 @@ paper-toolbar {
 }
 
 .drinkDiv{
-    /*border: 1px solid black;*/
-    /*border-bottom: 1px solid rgba(255,255,255,0.12);*/
     margin-bottom: 20px;
-}
-
-section{
-    /*border: 1px solid blue;*/
-    /*border-bottom: 1px solid #F89614;*/
 }
 
 input[type="number"]{
@@ -174,7 +160,6 @@ input[type="number"]{
 }
 
 footer{
-    /*border: 1px solid red;*/
     margin-top: 60px;
     font-size: 18px;
 }
@@ -205,7 +190,6 @@ h5{
     margin: 0;
     margin-top: 15px;
     margin-bottom: 60px;
-    /*border: 1px solid red;*/
 }
 
 
@@ -216,11 +200,6 @@ p{
 
 h4{
     margin: 0;
-    /*color: #F89614;*/
-}
-
-.percentage{
-    /*width: 100px;*/
 }
 
 input[type="number"]{
@@ -325,68 +304,4 @@ input:focus::-webkit-input-placeholder
 
 .clearfix {
     *zoom: 1;
-}
-
-/* ==========================================================================
-   Print styles
-   ========================================================================== */
-
-@media print {
-    *,
-    *:before,
-    *:after {
-        background: transparent !important;
-        color: #000 !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
-
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
-
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
-
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
-
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
-    }
-
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
-
-    thead {
-        display: table-header-group;
-    }
-
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
-
-    img {
-        max-width: 100% !important;
-    }
-
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
-
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
 }
