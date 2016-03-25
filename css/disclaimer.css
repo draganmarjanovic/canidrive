@@ -1,0 +1,66 @@
+/**
+* @file Main html page for the calculator.
+* @author Dragan Marjanovic <gagalug13@gmail.com>
+* @copyright Dragan Marjanovic 2015
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. 
+*/ 
+
+body{
+    background-color: #212121;
+    margin-top: 80px;
+    color: white;
+}
+
+h1{
+    text-align: center;
+    color: white;
+}
+
+h3{
+    margin-top: 40px;
+    color: #F89614;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.wrapper{
+    width: 960px;
+    margin: 0 auto;
+}
+
+footer{
+    margin-top: 60px;
+    color: #F89614;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+footer a{
+    color: #F89614;
+}
+
+p a{
+    text-decoration: underline;
+    color: #F89614;
+}
+
+
+@media(max-width:960px) {
+    .wrapper{
+        width: calc(100% - 40px);
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

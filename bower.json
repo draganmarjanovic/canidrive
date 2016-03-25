@@ -1,0 +1,21 @@
+{
+  "name": "canidrive",
+  "version": "0.0.0",
+  "homepage": "https://github.com/draganmarjanovic/canidrive",
+  "authors": [
+    "draganmarjanovic <gagalug13@gmail.com>"
+  ],
+  "description": "Can I Drive is a tool for estimating Blood Alcohol Content (BAC). It utilises the Widmark Formula to model BAC.",
+  "license": "GNU GPL V2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.0"
+  }
+}

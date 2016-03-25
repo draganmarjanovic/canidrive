@@ -3,13 +3,12 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Dragan Marjanovic - Design and Development
 
 # THANKS
 
-    <name>
+    Icon made by Freepik from www.flaticon.com 
 
 # TECHNOLOGY COLOPHON
 
-    HTML5, CSS3
-    jQuery, Modernizr
+    HTML5, CSS3, Polymer, Angular.JS
